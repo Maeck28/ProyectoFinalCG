@@ -11,11 +11,16 @@
 #include "figuras.h"
 #include "Camera.h"
 #include "cmodel/CModel.h"
+#include <mmsystem.h>
+#include <iostream>
+#include <fstream>
 
 //Solo para Visual Studio 2015
 #if (_MSC_VER >= 1900)
 #   pragma comment( lib, "legacy_stdio_definitions.lib" )
 #endif
+
+using namespace std;
 
 int w = 500, h = 500;
 int frame=0,time,timebase=0;
@@ -101,6 +106,71 @@ recorridob3 = false,
 recorridob4 = false,
 recorridob5 = true;
 
+class Wave {
+
+public:
+	Wave(char * filename);
+	~Wave();
+	void play(bool async = true);
+	void stop();
+	bool isok();
+
+private:
+	char * buffer;
+	bool ok;
+	HINSTANCE HInstance;
+};
+
+void Wave::stop(){
+	PlaySound(NULL, 0, 0);
+}
+
+Wave::Wave(char * filename)
+{
+	ok = false;
+	buffer = 0;
+	HInstance = GetModuleHandle(0);
+
+	ifstream infile(filename, ios::binary);
+
+	if (!infile)
+	{
+		std::cout << "Wave::file error: " << filename << std::endl;
+		return;
+	}
+
+	infile.seekg(0, ios::end);   // get length of file
+	int length = infile.tellg();
+	buffer = new char[length];    // allocate memory
+	infile.seekg(0, ios::beg);   // position to start of file
+	infile.read(buffer, length);  // read entire file
+
+	infile.close();
+	ok = true;
+}
+
+Wave::~Wave()
+{
+	PlaySound(NULL, 0, 0); // STOP ANY PLAYING SOUND
+	delete[] buffer;      // before deleting buffer.
+}
+void Wave::play(bool async)
+{
+	if (!ok)
+		return;
+
+	if (async)
+		PlaySound(buffer, HInstance, SND_MEMORY | SND_ASYNC);
+	else
+		PlaySound(buffer, HInstance, SND_MEMORY);
+}
+
+bool Wave::isok()
+{
+	return ok;
+}
+
+Wave sample("sample.wav");
 
 
 //Fachada recamara 1
@@ -1094,6 +1164,12 @@ void InitGL ( GLvoid )     // Inicializamos parametros
 	glEnable(GL_AUTO_NORMAL);
 	glEnable(GL_NORMALIZE);
 
+	//Audio
+
+	
+
+	//Fin audio
+
 	t_coche.LoadTGA("Textura/02.tga");
 	t_coche.BuildGLTexture();
 	t_coche.ReleaseImage();
@@ -1799,6 +1875,14 @@ void arrow_keys ( int a_keys, int x, int y )  // Funcion para manejo de teclas e
 		objCamera.UpDown_Camera(-CAMERASPEED);
 		break;
 
+	case GLUT_KEY_END: //
+		sample.stop();
+		break;
+
+	case GLUT_KEY_HOME: //
+		sample.play();
+		break;
+
     case GLUT_KEY_UP:     // Presionamos tecla ARRIBA...
 		g_lookupdown -= .50f;//g_lookupdown -= 1.0f;
 		break;
@@ -1823,7 +1907,7 @@ void arrow_keys ( int a_keys, int x, int y )  // Funcion para manejo de teclas e
 
 int main ( int argc, char** argv )   // Main Function
 {
-
+	
   glutInit            (&argc, argv); // Inicializamos OpenGL
   glutInitDisplayMode (GLUT_RGB | GLUT_DOUBLE | GLUT_DEPTH); // Display Mode (Clores RGB y alpha | Buffer Doble )
   glutInitWindowSize  (2000, 2000);	// Tamaño de la Ventana
@@ -1837,8 +1921,11 @@ int main ( int argc, char** argv )   // Main Function
   glutSpecialFunc     ( arrow_keys );	//Otras
   glutIdleFunc		  ( animacion );
 
-
+  
+  
   glutMainLoop        ( );          // 
+
+  
 
   return 0;
 }
