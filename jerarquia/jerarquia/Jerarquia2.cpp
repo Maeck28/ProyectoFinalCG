@@ -64,11 +64,13 @@ cb, cc, mac2, mouse, madn2, madc, piedra, libro, libro2, post1, tapa;
 CTexture lamp, lamp1, marron, respaldo, almohada, almohada1, colchon, base,
 cajon, carp, madebl, cds0, cds1, cuadrocd;
 
+CTexture mBlanco, mPurpura, mNegro;
+
 /*ELEMENTOS CUARTO PRINCIPAL */
 CTexture ventanal, piso2, pos2, alf, blanco, resp_principal, 
 colchon2, base_c;
 
-CTexture A1, A2, A3, A4, A5; // Cielo;
+CTexture A1, A2, A3, A4, A5,A6; // Cielo;
 
 CTexture tree;
 
@@ -78,10 +80,13 @@ CFiguras sky;
 CFiguras pisoCuarto;
 CFiguras muro;
 CFiguras s, b, m, k, t, a;
+CFiguras banoCompartidoC;
 
 CModel silla_office, bocho, avion, sofa, maceta, spider, audifonos, lampara_mesa;
 
 CModel silla_prins;
+
+CModel ducha,wc;
 
 
 bool f_animacion = false, f_mover = false, f_mover2 = false,
@@ -154,6 +159,7 @@ Wave::~Wave()
 	PlaySound(NULL, 0, 0); // STOP ANY PLAYING SOUND
 	delete[] buffer;      // before deleting buffer.
 }
+
 void Wave::play(bool async)
 {
 	if (!ok)
@@ -1086,6 +1092,102 @@ void cama_principal() {
 	glPopMatrix();
 }
 
+void banoCompartido(void) {
+
+	glPushMatrix(); //Push General de la funcion
+	
+	glPushMatrix();// Push Paredes
+		glScalef(3, 3, 3);
+		glPushMatrix();//Pared inferior
+		banoCompartidoC.prismaBanoCompartido(2.6,2.50,0.05,NULL,NULL,NULL, NULL, NULL, mBlanco.GLindex);
+		glPopMatrix();//Fin pared inferior
+		
+		glTranslatef(-1.3, 0, -1.1);
+		glPushMatrix();//Pared izquierda inferior
+		banoCompartidoC.prismaBanoCompartido(0.05,2.5,2.2, NULL, mBlanco.GLindex, NULL, NULL, NULL, NULL);
+		glPopMatrix();//fin pared izquierda inferior
+
+		glTranslatef(0, 0, -2.4);
+		glPushMatrix();//Pared Izquierda Superior
+		banoCompartidoC.prismaBanoCompartido(0.05, 2.5, 1, NULL, mBlanco.GLindex, NULL, NULL, NULL, NULL);
+		glPopMatrix();//fin pared izquierda superior
+
+		glTranslatef(1.3, 0, -0.5);
+		glPushMatrix();//Pared Superior
+		banoCompartidoC.prismaBanoCompartido(2.6, 2.5, 0.05, NULL, NULL, NULL, NULL, mBlanco.GLindex, NULL);
+		glPopMatrix();//fin pared superior
+
+		glTranslatef(1.3, 0, 0.5);
+		glPushMatrix();//Pared derecha superior
+		banoCompartidoC.prismaBanoCompartido(0.05, 2.5, 1, mBlanco.GLindex, NULL, NULL, NULL, NULL, NULL);
+		
+		glPushMatrix();//Push de la regadera----------------
+		glTranslatef(-0.29, 0, 0);
+		glRotatef(-90, 0, 1, 0);
+		glScalef(0.01,0.01,0.01);
+		ducha.GLrender(NULL, _SHADED, 1);
+		glColor3f(1,1,1);
+		glPopMatrix();// Pop de la regadera------------------
+		
+		glPopMatrix();//fin pared derecha superior
+
+		glTranslatef(0, 0, 2.4);
+		glPushMatrix();//Pared derecha inferior
+		banoCompartidoC.prismaBanoCompartido(0.05, 2.5, 2.2, mBlanco.GLindex, NULL, NULL, NULL, NULL, NULL);
+		
+		glPushMatrix();//Push del WC----------------
+		glTranslatef(-0.41, -1.25, .55);
+		glRotatef(90, 0, 1, 0);
+		glScalef(0.001, 0.001, 0.001);
+		wc.GLrender(NULL, _SHADED, 1);
+		glColor3f(1, 1, 1);
+		glPopMatrix();// Poop del WC------------------
+
+		glPopMatrix();//fin pared derecha inferior
+
+		glTranslatef(-1.3, -1.25, -0.9);
+		glPushMatrix();//Piso
+		banoCompartidoC.prismaBanoCompartido(2.6, 0.05, 4, NULL, NULL, mPurpura.GLindex, NULL,NULL, NULL);
+		glPopMatrix();//Piso
+
+		glTranslatef(0, 2.5, 0);
+		glPushMatrix();//Techo
+		//banoCompartidoC.prismaBanoCompartido(2.6, 0.05, 4, NULL, NULL, NULL, mPurpura.GLindex, NULL, NULL);
+		glPopMatrix();//Techo
+
+		glTranslatef(0.45, -1.25, 0.9);
+		glPushMatrix();//Pared de WC
+		banoCompartidoC.prismaBanoCompartido(1.7, 2.5, 0.05, NULL, NULL, NULL, NULL, mBlanco.GLindex, mBlanco.GLindex);
+		glPopMatrix();//Pared de WC
+
+		//Base de la ducha
+
+		glTranslatef(-1.15, -0.75, -2.4);
+		glPushMatrix();//parte Base derecha 
+		banoCompartidoC.prismaBanoCompartido(0.1, 0.5, 1, mNegro.GLindex, mNegro.GLindex, mNegro.GLindex, mNegro.GLindex, mNegro.GLindex, mNegro.GLindex);
+		glPopMatrix();//parte Base derecha
+
+		glTranslatef(1.45, 0, 0.45);
+		glPushMatrix();//parte Base inferior
+		banoCompartidoC.prismaBanoCompartido(1.1,0.5,0.1, mNegro.GLindex, mNegro.GLindex, mNegro.GLindex, mNegro.GLindex, mNegro.GLindex, mNegro.GLindex);
+		glPopMatrix();//parte Base inferior
+
+		
+
+
+
+		
+
+
+
+
+
+	glPopMatrix(); //Pop paredes
+
+	glPopMatrix(); //Termina push general de la función
+
+}
+
 void cuarto2() {
 		glPushMatrix();// cuarto2
 		glScalef(1.5, 0.70, 0.80);//glScalef(0.3, 0.3, 0.3);
@@ -1333,6 +1435,8 @@ void InitGL ( GLvoid )     // Inicializamos parametros
 	bocho.GLIniTextures();
 	bocho.ReleaseTextureImages();
 
+	
+
 	avion._3dsLoad("toy.3ds");
 	avion.LoadTextureImages();
 	avion.GLIniTextures();
@@ -1438,7 +1542,7 @@ void InitGL ( GLvoid )     // Inicializamos parametros
 	base_c.BuildGLTexture();
 	base_c.ReleaseImage();
 
-	A1.LoadTGA("01.tga");
+	A1.LoadTGA("06.tga");
 	A1.BuildGLTexture();
 	A1.ReleaseImage();
 
@@ -1457,6 +1561,34 @@ void InitGL ( GLvoid )     // Inicializamos parametros
 	A5.LoadTGA("05.tga");
 	A5.BuildGLTexture();
 	A5.ReleaseImage();
+
+	A6.LoadTGA("06.tga");
+	A6.BuildGLTexture();
+	A6.ReleaseImage();
+
+	//Marmol Baño
+
+	mBlanco.LoadTGA("marmolBlanco.tga");
+	mBlanco.BuildGLTexture();
+	mBlanco.ReleaseImage();
+
+	mPurpura.LoadTGA("marmolPurpura.tga");
+	mPurpura.BuildGLTexture();
+	mPurpura.ReleaseImage();
+
+	mNegro.LoadTGA("marmolNegro.tga");
+	mNegro.BuildGLTexture();
+	mNegro.ReleaseImage();
+
+	ducha._3dsLoad("shower.3ds");
+	ducha.LoadTextureImages();
+	ducha.GLIniTextures();
+	ducha.ReleaseTextureImages();
+
+	wc._3dsLoad("wc.3ds");
+	wc.LoadTextureImages();
+	wc.GLIniTextures();
+	wc.ReleaseTextureImages();
 
 
 
@@ -1481,6 +1613,9 @@ void display ( void )   // Creamos la funcion donde se dibuja
 	glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	
 	glLoadIdentity();
+
+	
+	
 	glPushMatrix();
 		glRotatef(g_lookupdown,1.0f,0,0);
 
@@ -1500,8 +1635,11 @@ void display ( void )   // Creamos la funcion donde se dibuja
 				glEnable(GL_LIGHTING);
 			glPopMatrix();*/
 
-
+		
 			glPushMatrix(); //Creamos cielo
+
+			
+
 				glDisable(GL_LIGHTING);
 				glTranslatef(0, 75, 0);
 				glMaterialfv(GL_FRONT, GL_DIFFUSE, Material_Blanco);
@@ -1514,8 +1652,15 @@ void display ( void )   // Creamos la funcion donde se dibuja
 					glScalef(250, 1, 250);
 					glColor3f(1.0, 1.0, 1.0);
 					k.prisma2(A5.GLindex, A5.GLindex);
+					
+					glTranslatef(0, -150, 0);
+					glScalef(250, 1, 250);
+					glColor3f(1.0, 1.0, 1.0);
+					k.prisma2(A6.GLindex, A6.GLindex);
 				glEnable(GL_LIGHTING);
 				glPopMatrix();
+
+				banoCompartido();
 			glPopMatrix();
 			
 			glPushMatrix();

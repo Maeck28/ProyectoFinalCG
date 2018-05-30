@@ -19,6 +19,7 @@ class CFiguras
 	void prisma_anun (GLuint text, GLuint text2);							//Funcíon creacion movimiento
 	//void prisma (float altura, float largo, float profundidad, GLuint text);
 	void prisma(float altura, float largo, float profundidad, GLuint text, GLuint text2, GLuint text3);
+	void prismaBanoCompartido(float largo, float altura, float profundidad, GLuint izquierda, GLuint derecha, GLuint arriba, GLuint abajo, GLuint frente, GLuint atras);
 	void prisma_gen(float altura, float largo, float profundidad, GLuint text, GLuint text2);
 	//Funcíon creacion prisma
 	void prisma2 (GLuint text, GLuint text2);
