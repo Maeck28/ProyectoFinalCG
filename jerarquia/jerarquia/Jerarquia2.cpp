@@ -22,6 +22,8 @@
 
 using namespace std;
 
+bool reset = true;
+
 int w = 500, h = 500;
 int frame=0,time,timebase=0;
 int deltaTime = 0;
@@ -1603,6 +1605,7 @@ void InitGL ( GLvoid )     // Inicializamos parametros
 
 	//END NEW//////////////////////////////
 
+
 	objCamera.Position_Camera(0,2.5f,3, 0,2.5f,0, 0, 1, 0);
 
 }
@@ -1940,6 +1943,7 @@ void keyboard ( unsigned char key, int x, int y )  // Create Keyboard Function
 
 		case 'w':   //Movimientos de camara
 		case 'W':
+
 			objCamera.Move_Camera( CAMERASPEED+0.1 );//0.2
 			break;
 
@@ -1998,6 +2002,57 @@ void keyboard ( unsigned char key, int x, int y )  // Create Keyboard Function
 			m_mover2 ^= true;
 			m_animacion = true;
 			break;
+
+
+		case 'R':
+			//RESET
+			objCamera.Position_Camera(0, 2.5f, 3, 0, 2.5f, 0, 0, 1, 0);
+			
+
+
+			cout << "hola estás presionando RESET";
+			
+			break;
+
+		case 'H':
+
+			objCamera.mPos.x = 0;
+			objCamera.mPos.z = 75;
+			objCamera.mPos.y = 20;
+
+			objCamera.mView.x = 0;
+			objCamera.mView.y = 2.5;
+			objCamera.mView.z = 0;
+
+			break;
+
+		case 'J':
+
+			objCamera.mPos.x = 75;
+			objCamera.mPos.z = 75;
+			objCamera.mPos.y = 100;
+
+			objCamera.mView.x = 0;
+			objCamera.mView.y = 2.5;
+			objCamera.mView.z = 0;
+
+			break;
+
+
+		case 'K':
+
+			objCamera.mPos.x = 0;
+			objCamera.mPos.y = 10;
+			objCamera.mPos.z = -75;
+
+			objCamera.mView.x = -90;
+			objCamera.mView.y = 0;
+			objCamera.mView.z = 0;
+
+			break;
+
+
+
 
 		case 27:        // Cuando Esc es presionado...
 			exit ( 0 );   // Salimos del programa

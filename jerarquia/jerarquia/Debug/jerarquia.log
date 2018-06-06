@@ -1,4 +1,4 @@
-﻿C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets(387,5): warning MSB8028: The intermediate directory (Debug\) contains files shared from another project (jerarquico.vcxproj).  This can lead to incorrect clean and rebuild behavior.
+﻿C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets(391,5): warning MSB8028: El directorio intermedio (Debug\) contiene archivos compartidos de otro proyecto (jerarquico.vcxproj). Esto puede dar lugar a un comportamiento incorrecto de limpieza y recompilación.
   Jerarquia2.cpp
-c:\users\c4ris\desktop\proyectofinalcg\jerarquia\jerarquia\jerarquia2.cpp(43): warning C4838: conversion from 'double' to 'GLfloat' requires a narrowing conversion
-  jerarquia.vcxproj -> C:\Users\c4ris\Desktop\ProyectoFinalCG\jerarquia\Debug\jerarquia.exe
+c:\users\chris\documents\github\proyectofinalcg\jerarquia\jerarquia\jerarquia2.cpp(45): warning C4838: la conversión de 'double' en 'GLfloat' requiere una conversión de restricción
+  jerarquia.vcxproj -> C:\Users\Chris\Documents\GitHub\ProyectoFinalCG\jerarquia\Debug\jerarquia.exe
